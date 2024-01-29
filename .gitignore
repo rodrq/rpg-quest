@@ -2,3 +2,4 @@ venv
 todo.md
 .env
 test.py
+__pycache__
