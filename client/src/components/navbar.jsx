@@ -2,6 +2,10 @@ import React from 'react'
 
 export default function Navbar() {
   return (
-    <div className='text-3xl'>navbar test</div>
+    <nav className='flex'>
+      <div>Home</div>
+      <div>Create character</div>
+      <div>Log in</div>
+    </nav>
   )
 }
