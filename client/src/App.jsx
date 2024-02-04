@@ -4,11 +4,11 @@ import {
   Route,
 } from "react-router-dom";
 
-
 import Layout from './components/layout/layout';
 import Home from './components/home';
-import CreateCharacter from './components/createCharacter';
 import ErrorPage from './components/errorPage';
+import CreateCharacterForm from './components/createCharacterForm';
+
 function App() {
   return (
     <>
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path='*' element={<ErrorPage/>} />
           <Route path='/' element={<Home/>}></Route>
-          <Route path='/create' element={<CreateCharacter/>}></Route>
+          <Route path='/create' element={<CreateCharacterForm/>}></Route>
         </Routes>
       </Layout>
     </>
