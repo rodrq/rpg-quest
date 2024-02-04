@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 export default function CreateCharacterForm() {
-  
+
     const [formData, setFormData] = useState({
       name: '',
       password: '',
@@ -19,7 +19,7 @@ export default function CreateCharacterForm() {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      console.log('Created char ' + formData.name);
+      console.log(`Created char: ${formData.name} the ${formData.rpgClass}`);
     }
 
   return (

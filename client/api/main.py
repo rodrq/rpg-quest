@@ -6,13 +6,15 @@ from quest_gen import generate_quest
 app = FastAPI()
 
 class QuestGenerationParams(BaseModel):
-    weapon_param: str
-    map_param: str
+    name: str
+    _class: str
+    map: str
 
-@app.post("/generate-quest")
+@app.post("/quest")
 async def generate_quest_endpoint(params: QuestGenerationParams):
     try:
-        result = generate_quest(params.weapon_param, params.map_param)
+        result = generate_quest(params.name, params._class, params.map)
         return JSONResponse(content={"text": result})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+

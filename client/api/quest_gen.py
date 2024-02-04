@@ -11,7 +11,7 @@ chat_template = ChatPromptTemplate.from_messages(
                     Don't greet the player.\
                     Speak to the player directly."),
 
-        ("human", "Hello gamemaster, I use a {weapon} as a weapon. I'm currently in the {map}"),
+        ("human", "Hello gamemaster, I use a {class} as a weapon. I'm currently in the {map}"),
     ]
 )
 
