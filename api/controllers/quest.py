@@ -1,16 +1,12 @@
-from pydantic import BaseModel
+from schemas import QuestGenerationParams
 from ai_model import client
 import json
 from fastapi.responses import JSONResponse
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from db.init import engine
+from database import engine
 from db.models import Quest
 
-class QuestGenerationParams(BaseModel):
-  name: str
-  class_: str
-  map: str
 
 async def create_quest_handler(params: QuestGenerationParams):
   try:

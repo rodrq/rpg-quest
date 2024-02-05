@@ -1,30 +1,30 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from schemas import CharacterParams
 from sqlalchemy.orm import Session
-from db.models import Character as CharacterModel
-from db.init import engine
+from db.models import Character
+from database import engine
+from auth.utils import get_hashed_password
 
 router = APIRouter()
 
-class Character(BaseModel):
-    name: str
-    password: str
-    class_: str
 
 @router.post("/character")
-async def create_character(character: Character):
+async def create_character(character: CharacterParams):
     try:
         with Session(engine) as session:
-            character_model = CharacterModel(
+            db_char_name= session.query(Character).filter(Character.name == character.name).first()
+            if db_char_name:
+                raise HTTPException(status_code=400, detail="Character name already exists")
+            character_model = Character(
                 name=character.name,
-                password=character.password,
+                password=get_hashed_password(character.password),
                 class_=character.class_
             )
-
             session.add(character_model)
             session.commit()
+            return {"message": "User registered successfully"}
 
-        return {"message": "Character created successfully"}
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    
