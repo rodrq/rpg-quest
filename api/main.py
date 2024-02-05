@@ -1,10 +1,20 @@
 from fastapi import FastAPI
 from routers import character, quest
-from dotenv import load_dotenv
+from database import Base, engine
 
-load_dotenv()
+def get_app() -> FastAPI:
 
-app = FastAPI()
-app.include_router(character.router)
-app.include_router(quest.router)
+    app = FastAPI()
+
+    Base.metadata.create_all(bind=engine)
+
+    app.include_router(character.router)
+
+    app.include_router(quest.router)
+
+    return app
+
+app = get_app()
+
+
 
