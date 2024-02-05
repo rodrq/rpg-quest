@@ -31,4 +31,23 @@ Each character can have multiple quests. This is represented by a one-to-many re
 
 The following ER diagram illustrates this schema:
 
+```mermaid
+erDiagram
+    CHARACTER {
+        int CharacterID PK
+        string Name
+        string Password
+        string Class
+    }
+    QUEST {
+        int QuestID PK
+        string Title
+        string Description
+        string Rewards
+        int Experience
+    }
+
+    CHARACTER ||--o{ QUEST : has
+```
+
 https://www.mermaidchart.com/app/projects/0b40769f-6378-41ce-9e9d-c3aba7ebea19/diagrams/444f8fe7-e50e-4c9a-b6ac-3d8481974412/version/v0.1/edit

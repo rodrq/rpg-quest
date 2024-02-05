@@ -20,4 +20,19 @@ This document describes the process of creating a character in our web applicati
 
 The following sequence diagram illustrates this process:
 
+```mermaid
+sequenceDiagram
+    participant User as User (webapp)
+    participant WebApp as WebApp
+    participant Server as Backend Server
+    participant DB as Database (Postgres)
+
+    User->>WebApp: Enters: name, password, and class
+    WebApp->>Server: HTTP POST /character {name, password, class}
+    Server->>DB: Saves character in 'characters'
+    DB-->>Server: Confirmation
+    Server-->>WebApp: Response: Character created
+    WebApp-->>User: Displays confirmation
+```
+
 https://www.mermaidchart.com/app/projects/0b40769f-6378-41ce-9e9d-c3aba7ebea19/diagrams/454666c4-fe15-43dd-9501-7f481cc1b16e/version/v0.1/edit

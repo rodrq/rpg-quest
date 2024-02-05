@@ -24,4 +24,23 @@ This document describes the process of generating a quest in our web application
 
 The following sequence diagram illustrates this process:
 
+```mermaid
+sequenceDiagram
+    participant User as User (WebApp)
+    participant WebApp as WebApp
+    participant Server as Backend Server
+    participant QuestGenFunction as Quest Generator Function
+    participant DB as Database (Postgres)
+
+    User->>WebApp: Clicks "Generate Quest"
+    WebApp->>Server: HTTP POST /quest - characterData & map
+    Server->>QuestGenFunction: Invokes quest generation
+    QuestGenFunction->>Server: Returns quest {title, description, rewards, exp}
+    Server->>DB: Saves quest in 'quests'
+    DB-->>Server: Confirmation
+    Server-->>WebApp: Response: Quest generated
+    WebApp-->>User: Displays quest details
+  
+```
+
 https://www.mermaidchart.com/app/projects/0b40769f-6378-41ce-9e9d-c3aba7ebea19/diagrams/fe1492fe-3114-40bb-b139-9b92db1d689d/version/v0.1/edit
