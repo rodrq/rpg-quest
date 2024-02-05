@@ -1,46 +1,30 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Table, MetaData, Column, Integer, String
-from sqlalchemy.orm import sessionmaker
-from api.main import app
-# Define the Pydantic model
-class CharacterBase(BaseModel):
+from sqlalchemy.orm import Session
+from db.models import Character as CharacterModel
+from db.init import engine
+
+router = APIRouter()
+
+class Character(BaseModel):
     name: str
     password: str
     class_: str
 
-# Create the SQLAlchemy engine and session
-engine = create_engine('postgresql://user:password@localhost/dbname')
-Session = sessionmaker(bind=engine)
+@router.post("/character")
+async def create_character(character: Character):
+    try:
+        with Session(engine) as session:
+            character_model = CharacterModel(
+                name=character.name,
+                password=character.password,
+                class_=character.class_
+            )
 
-# Define the SQLAlchemy table
-metadata = MetaData()
-Character = Table(
-    'character',
-    metadata,
-    Column('CharacterID', Integer, primary_key=True),
-    Column('Name', String),
-    Column('Password', String),
-    Column('Class', String),
-)
+            session.add(character_model)
+            session.commit()
 
-
-@app.post("/character")
-async def create_character(character: CharacterBase):
-    # Create a new SQLAlchemy session
-    session = Session()
-
-    # Insert the new character into the database
-    session.execute(Character.insert().values(
-        Name=character.name,
-        Password=character.password,
-        Class=character.class_
-    ))
-
-    # Commit the transaction
-    session.commit()
-
-    # Close the session
-    session.close()
-
-    return {"message": "Character created successfully"}
+        return {"message": "Character created successfully"}
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
