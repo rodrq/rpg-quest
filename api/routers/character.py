@@ -1,24 +1,26 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from schemas import CharacterParams
 from sqlalchemy.orm import Session
-from db.models import Character
 from database import engine
+from db.models import Character
 from auth.utils import get_hashed_password
+from fastapi import HTTPException
 
-router = APIRouter()
+router = APIRouter(prefix='/character',
+                   tags=['character'])
 
 
-@router.post("/character")
-async def create_character(character: CharacterParams):
+@router.post('/')
+async def create_character(params: CharacterParams):
     try:
         with Session(engine) as session:
-            db_char_name= session.query(Character).filter(Character.name == character.name).first()
+            db_char_name= session.query(Character).filter(Character.name == params.name).first()
             if db_char_name:
                 raise HTTPException(status_code=400, detail="Character name already exists")
             character_model = Character(
-                name=character.name,
-                password=get_hashed_password(character.password),
-                class_=character.class_
+                name=params.name,
+                password=get_hashed_password(params.password),
+                class_=params.class_
             )
             session.add(character_model)
             session.commit()
@@ -27,4 +29,6 @@ async def create_character(character: CharacterParams):
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+
+    
     

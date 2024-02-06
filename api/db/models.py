@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from database import Base
 
 class Character(Base):
@@ -9,6 +10,7 @@ class Character(Base):
     password = Column(String)
     class_ = Column(String, name="class")
     quests = relationship('Quest', back_populates='character')
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 class Quest(Base):
     __tablename__ = 'quests'
