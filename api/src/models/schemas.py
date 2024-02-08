@@ -9,6 +9,7 @@ class CharacterParams(BaseModel):
 
 class GetQuestsParams(BaseModel):
     character_name: str
+    
 
 class QuestGenerationParams(BaseModel):
   name: str

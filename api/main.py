@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from routers import character, quest
-from database import Base, engine
+from src.routes import quest, character
+from src.config.database import Base, engine
 
 def get_app() -> FastAPI:
 
@@ -11,6 +11,7 @@ def get_app() -> FastAPI:
     app.include_router(character.router)
 
     app.include_router(quest.router)
+    
 
     return app
 
