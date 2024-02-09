@@ -15,12 +15,6 @@ async def create_quest(current_character: Annotated[CharacterParams, Depends(get
     print(quest_params)
     return await create_quest_handler(quest_params)
 
-@router.get('/quest-params', response_model=QuestGenerationParams)
-async def get_character_params(current_character: Annotated[CharacterParams, Depends(get_current_character)], map:QuestGenerationMap):
-    quest_params = QuestGenerationParams(username = current_character.username, 
-                                         class_= current_character.class_,
-                                         map=map.map)
-    return quest_params
 
 @router.get("/")
 async def get_quests(current_character_id: Annotated[CharacterParams, Depends(get_current_character_id)]):
