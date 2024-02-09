@@ -1,4 +1,4 @@
-from src.models.schemas import CharacterParams
+from src.models.schemas import CharacterInDb
 from sqlalchemy.orm import Session
 from src.config.database import engine
 from src.models.models import Character
@@ -7,7 +7,7 @@ from src.utils.query import db_query_value
 from fastapi import HTTPException
 
 
-async def create_character_handler(params: CharacterParams):
+async def create_character_handler(params: CharacterInDb):
     try:
         if db_query_value(Character, Character.username, params.username):
                 raise HTTPException(status_code=400, detail="Character username already exists")

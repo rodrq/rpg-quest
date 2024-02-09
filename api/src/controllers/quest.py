@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.config.database import engine 
-from src.models.models import Quest 
+from src.models.models import Quest
 from src.models.schemas import TokenData
 from src.config.open_ai_model import client
 import json
@@ -63,3 +63,11 @@ async def get_quests_handler(params: TokenData):
     quests_dict = [quest.__dict__ for quest in quests]
     return quests_dict
 
+async def get_quest_handler(current_character_id, quest_id):
+  with Session(engine) as session:
+        quest = session.query(Quest).filter_by(quest_id=quest_id, character_username=current_character_id).first()
+        if not quest:
+          raise HTTPException(status_code=401, detail="Invalid credentials")
+        return quest
+
+  

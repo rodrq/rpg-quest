@@ -12,12 +12,13 @@ class TokenData(BaseModel):
 class CharacterParams(BaseModel):
     username: str
     class_: str
+    
 
 class CharacterInDb(CharacterParams):
     password: str
 
 class GetQuestsParams(BaseModel):
-    character_username: str
+    username: str
     
 class QuestGenerationMap(BaseModel):
     map: str
