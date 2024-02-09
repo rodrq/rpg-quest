@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
 from sqlalchemy.orm import relationship, validates
 from sqlalchemy.sql import func
 from src.config.database import Base
@@ -31,3 +31,4 @@ class Quest(Base):
     experience = Column(Integer, name='experience')
     character_username = Column(String, ForeignKey('characters.username'))
     character = relationship('Character', back_populates='quests')
+    cost = Column(Float, name="cost")

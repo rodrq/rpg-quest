@@ -12,7 +12,7 @@ async def create_quest_handler(quest_params):
   try:
     system_prompt, user_prompt = create_quest_prompt(quest_params.username, quest_params.class_, quest_params.map)
     completion = client.chat.completions.create(
-        model="gpt-4-1106-preview",
+        model="gpt-3.5-turbo-0125",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
@@ -21,15 +21,20 @@ async def create_quest_handler(quest_params):
         temperature=1.0
     )
     result = json.loads(completion.choices[0].message.content)
+    
+    usage_tokens = completion.usage
+    cost = (usage_tokens.prompt_tokens * 0.00001) + (usage_tokens.completion_tokens * 0.00003)
+    
 
     quest = Quest(
         title=result['title'],
         description=result['description'],
         rewards=result['rewards'],
         experience=result['experience'],
-        character_username=quest_params.username
+        character_username=quest_params.username,
+        cost = cost
     )
-
+    print(quest)
     with Session(engine) as session:
       session.add(quest)
       session.commit()
@@ -41,7 +46,7 @@ async def create_quest_handler(quest_params):
   
 def create_quest_prompt(username: str, class_: str, map: str):
     system_prompt = f"""You are a gamemaster of a RPG game. 
-                    "Your task is to create an object in JSON, that will represent
+                    "Your task is to output a JSON, that will represent
                     a very short and concise quest using the information they tell you about themselves.
                     The quest should only and only have the following attributes as JSON payload:
                     'title': a string representing the quest's title,
