@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.config.database import engine 
 from src.models.models import Quest 
-from src.models.schemas import QuestGenerationParams, GetQuestsParams
+from src.models.schemas import TokenData
 from src.config.open_ai_model import client
 import json
 from fastapi.responses import JSONResponse
@@ -55,11 +55,11 @@ def create_quest_prompt(username: str, class_: str, map: str):
     user_prompt = f""""Hello gamemaster, My name is {username} and I'm a {class_}. I'm currently in the map {map}"""
     return system_prompt, user_prompt
        
-async def get_quests_handler(params: GetQuestsParams):
+async def get_quests_handler(params: TokenData):
   with Session(engine) as session:
-    quests = session.query(Quest).filter(Quest.character_username == params.character_username).all()
+    quests = session.query(Quest).filter(Quest.character_username == params.username).all()
     if not quests:
-      raise HTTPException(status_code=404, detail=f"{params.character_username} didn't generate any quest yet.")
+      raise HTTPException(status_code=404, detail=f"{params.username} didn't generate any quest yet.")
     quests_dict = [quest.__dict__ for quest in quests]
     return quests_dict
 
