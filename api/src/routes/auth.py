@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from src.auth.auth import authenticate_character, create_access_token, get_current_character
-from src.models.schemas import TokenParams, QuestGenerationParams
+from fastapi.responses import JSONResponse
+from src.auth.auth import authenticate_character, create_access_token
+from src.models.schemas import TokenParams
 from typing import Annotated
 from datetime import timedelta
 from src.config.config import TOKEN_LIFETIME_MINUTES
@@ -10,9 +11,9 @@ router = APIRouter(prefix="/auth",
                    tags=["Authorization"])
 
 
-@router.post("/", response_model=TokenParams)
+@router.post("/")
 async def login_for_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> TokenParams:
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = authenticate_character(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -24,12 +25,14 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    return TokenParams(access_token=access_token, token_type="bearer")
+    response = JSONResponse(content={"token": access_token})
+    response.set_cookie(
+    key="token",
+    value=access_token,
+    max_age=1800,
+    httponly=False)
+    return response
 
 
-@router.get("/metest", response_model=QuestGenerationParams)
-async def read_users_me(
-    current_user: Annotated[QuestGenerationParams, Depends(get_current_character)]
-):
-    return current_user
+
     

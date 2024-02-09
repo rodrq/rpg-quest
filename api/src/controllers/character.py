@@ -5,7 +5,8 @@ from src.models.models import Character
 from src.utils.pw_hash import get_hashed_password
 from src.utils.query import db_query_value
 from fastapi import HTTPException
-
+from fastapi.responses import JSONResponse
+from src.auth.auth import create_access_token
 
 async def create_character_handler(params: CharacterInDb):
     try:
@@ -19,7 +20,18 @@ async def create_character_handler(params: CharacterInDb):
         with Session(engine) as session:  
             session.add(character)
             session.commit()
-            return {"message": "User registered successfully"}
+
+        token_data = {"sub": params.username}
+        access_token = create_access_token(token_data)
+        
+        response = JSONResponse(content={"message": "Created character"})
+        response.set_cookie(
+        key="token",
+        value=f"{access_token}",
+        max_age=1800,
+        httponly=False
+    )
+        return response
 
     except Exception as e:
         print(e)
