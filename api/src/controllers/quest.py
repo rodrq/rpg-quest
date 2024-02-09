@@ -63,10 +63,3 @@ async def get_quests_handler(params: TokenData):
     quests_dict = [quest.__dict__ for quest in quests]
     return quests_dict
 
-async def get_quest_handler(quest_id: int):
-  with Session(engine) as session:
-    quest = session.query(Quest).filter(Quest.quest_id == quest_id).first()
-    if not quest:
-      raise HTTPException(status_code=404, detail="Quest not found")
-    return quest
-  
