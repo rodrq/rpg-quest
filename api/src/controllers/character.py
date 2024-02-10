@@ -13,7 +13,7 @@ async def create_character_handler(params: CharacterInDb):
         if get_character(params.username):
                 raise HTTPException(status_code=400, detail="Character username already exists")
         character = Character(
-            username=(params.username),
+            username=params.username,
             password=get_hashed_password(params.password),
             class_=params.class_
         )
