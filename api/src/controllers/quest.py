@@ -25,7 +25,6 @@ async def create_quest_handler(quest_params):
     usage_tokens = completion.usage
     cost = (usage_tokens.prompt_tokens * 0.00001) + (usage_tokens.completion_tokens * 0.00003)
     
-
     quest = Quest(
         title=result['title'],
         description=result['description'],
@@ -33,7 +32,7 @@ async def create_quest_handler(quest_params):
         experience=result['experience'],
         character_username=quest_params.username,
         cost = cost
-    )
+    ) 
     print(quest)
     with Session(engine) as session:
       session.add(quest)
@@ -51,7 +50,7 @@ def create_quest_prompt(username: str, class_: str, map: str):
                     The quest should only and only have the following attributes as JSON payload:
                     'title': a string representing the quest's title,
                     'description': a string describing the quest,
-                    'rewards': a list of strings with the quest's rewards,
+                    'rewards': an array of strings with the quest's rewards,
                     'experience': an integer representing the experience points gained from the quest,
          
                     Speak to the player directly and don't greet them. Start by the key 'title'.
