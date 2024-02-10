@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const history = useHistory();
@@ -25,15 +27,13 @@ const Login = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams(formData).toString(),
-        credentials: 'include',  // Include credentials for cookies
+        credentials: 'include', 
       });
 
       if (response.ok) {
-        // Login successful, redirect to home
         login(); 
         history.push('/');
       } else {
-        // Handle login failure, e.g., display an error message
         console.error('Login failed:', response.statusText);
       }
     } catch (error) {

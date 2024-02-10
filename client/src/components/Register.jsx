@@ -1,4 +1,3 @@
-// Register.js
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
@@ -12,7 +11,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    class_: 'Warrior', // Default value
+    class_: 'Warrior',
   });
 
   const handleChange = (e) => {
@@ -33,11 +32,9 @@ const Register = () => {
       });
 
       if (response.ok) {
-        // Registration successful, redirect to login or home
         login();
         history.push('/');
       } else {
-        // Handle registration failure, e.g., display an error message
         console.error('Registration failed:', response.statusText);
       }
     } catch (error) {
