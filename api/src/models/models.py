@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float, JSON
 from sqlalchemy.orm import relationship, validates
 from sqlalchemy.sql import func
 from src.config.database import Base
@@ -27,7 +27,7 @@ class Quest(Base):
     quest_id = Column(Integer, primary_key=True)
     title = Column(String, name='title')
     description = Column(String, name='description')
-    rewards = Column(String, name='rewards')
+    rewards = Column(JSON, name='rewards')
     experience = Column(Integer, name='experience')
     character_username = Column(String, ForeignKey('characters.username'))
     character = relationship('Character', back_populates='quests')
