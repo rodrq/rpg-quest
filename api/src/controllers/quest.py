@@ -44,9 +44,9 @@ async def create_quest_handler(quest_params):
     raise HTTPException(status_code=500, detail=str(e))
   
 def create_quest_prompt(username: str, class_: str, map: str):
-    system_prompt = f"""You are a gamemaster of a RPG game. 
-                    "Your task is to output a JSON, that will represent
-                    a very short and concise quest using the information they tell you about themselves.
+    system_prompt = f"""You are the gamemaster of a RPG game. 
+                    Your task is to output a JSON, that will represent
+                    a very short and concise quest using the information the player tells you about themselves.
                     The quest should only and only have the following attributes as JSON payload:
                     'title': a string representing the quest's title,
                     'description': a string describing the quest,
