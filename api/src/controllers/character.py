@@ -3,17 +3,17 @@ from sqlalchemy.orm import Session
 from src.config.database import engine
 from src.models.models import Character
 from src.utils.pw_hash import get_hashed_password
-from src.utils.query import db_query_value
+from src.utils.query import get_character
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from src.auth.auth import create_access_token
 
 async def create_character_handler(params: CharacterInDb):
     try:
-        if db_query_value(Character, Character.username, params.username):
+        if get_character(params.username):
                 raise HTTPException(status_code=400, detail="Character username already exists")
         character = Character(
-            username=params.username,
+            username=(params.username),
             password=get_hashed_password(params.password),
             class_=params.class_
         )
