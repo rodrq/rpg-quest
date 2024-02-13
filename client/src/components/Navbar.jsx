@@ -12,9 +12,15 @@ const Navbar = () => {
   const { authenticated, logout } = useAuth();
 
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
 
   const handleLogout = () => {
     setLogoutModalOpen(true);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const confirmLogout = () => {
@@ -37,6 +43,28 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4 text-white ">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center font-bold text-lg py-1 pl-5">
+        <div className="lg:hidden">
+          <button
+            onClick={toggleMobileMenu}
+            className="text-white focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
         <Link to="/" className="flex items-center font-bold text-lg py-1 pl-5">
             <img
               className="w-10 h-10 mr-2 "

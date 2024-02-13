@@ -86,7 +86,7 @@ const Play = () => {
                 >
                   <option value="" disabled>Select a map</option>
                   <option value="Forest">Forest</option>
-                  <option value="Town">Beach town</option>
+                  <option value="Town">Metropolis</option>
                   <option value="River">River</option>
                   <option value="Mountain">Mountain</option>
                   <option value="Desert">Desert</option>

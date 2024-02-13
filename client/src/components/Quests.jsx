@@ -60,7 +60,7 @@ const Quests = () => {
       ) : (
         <div>
           <p>No quests available.</p>
-          <Link to='/register'>Click here to create one</Link>
+          <Link to='/play'>Click here to create one</Link>
         </div>
       )}
     </div>
