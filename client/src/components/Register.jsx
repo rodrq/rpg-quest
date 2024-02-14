@@ -33,7 +33,7 @@ const Register = () => {
 
       if (response.ok) {
         login();
-        history.push('/');
+        history.push('/play');
       } else {
         console.error('Registration failed:', response.statusText);
       }
