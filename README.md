@@ -34,7 +34,7 @@ sequenceDiagram
     deactivate Backend
 
     Frontend->>User: Displays generated quest to the user
-
+```
 
 ## Prompt used:
 ![prompt](https://github.com/rodrq/rpg-quest/assets/84244902/663195c0-e6d9-4839-b2ff-11fda7bb3e8d)
