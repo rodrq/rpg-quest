@@ -4,7 +4,7 @@ Proof of concept project showcasing how AI can create real-time video game quest
 
 ## How it Works
 
-The AI RPG Quest Creator utilizes the following process:
+The Quest Creator utilizes the following process:
 
 ```mermaid
 sequenceDiagram
@@ -34,3 +34,30 @@ sequenceDiagram
     deactivate Backend
 
     Frontend->>User: Displays generated quest to the user
+```
+
+## Prompt used:
+![prompt](https://github.com/rodrq/rpg-quest/assets/84244902/663195c0-e6d9-4839-b2ff-11fda7bb3e8d)
+
+## PostgreSQL database ERD:
+
+```mermaid
+erDiagram
+    CHARACTER {
+        int CharacterID PK
+        string Name
+        string Password
+        string Class
+        datetime Created_at
+    }
+    QUEST {
+        int QuestID PK
+        string Title
+        string Description
+        json Rewards
+        int Experience
+        float Cost
+    }
+
+    CHARACTER ||--o{ QUEST : has
+```
