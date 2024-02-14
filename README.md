@@ -39,5 +39,25 @@ sequenceDiagram
 ## Prompt used:
 ![prompt](https://github.com/rodrq/rpg-quest/assets/84244902/663195c0-e6d9-4839-b2ff-11fda7bb3e8d)
 
-## PostgreSQL database:
-[erd-postgres.md](https://github.com/rodrq/rpg-quest/files/14275731/erd-postgres.md)
+## PostgreSQL database ERD:
+
+```mermaid
+erDiagram
+    CHARACTER {
+        int CharacterID PK
+        string Name
+        string Password
+        string Class
+        datetime Created_at
+    }
+    QUEST {
+        int QuestID PK
+        string Title
+        string Description
+        json Rewards
+        int Experience
+        float Cost
+    }
+
+    CHARACTER ||--o{ QUEST : has
+```
