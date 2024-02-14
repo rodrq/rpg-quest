@@ -12,6 +12,8 @@ const getCookie = (name) => {
 };
 
 const Quests = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [quests, setQuests] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +22,7 @@ const Quests = () => {
       try {
         const accessToken = getCookie('token');
 
-        const response = await fetch('http://localhost:8000/quest/all', {
+        const response = await fetch(apiUrl + 'quest/all', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

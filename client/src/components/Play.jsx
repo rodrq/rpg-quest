@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const Play = () => {
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const history = useHistory();
     const { authenticated } = useAuth();
     const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ const Play = () => {
   
         const accessToken = getCookie('token');
   
-        const response = await fetch('http://localhost:8000/quest', {
+        const response = await fetch(apiUrl + 'quest', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

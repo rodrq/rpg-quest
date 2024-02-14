@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 
 const Register = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const history = useHistory();
 
@@ -22,7 +23,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/character', {
+      const response = await fetch(apiUrl + 'character', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

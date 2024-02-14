@@ -13,6 +13,7 @@ const getCookie = (name) => {
   };
   
 const Quest = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { id } = useParams();
   const [quest, setQuest] = useState(null);
 
@@ -21,7 +22,7 @@ const Quest = () => {
         try {
             const accessToken = getCookie('token');
     
-            const response = await fetch((`http://localhost:8000/quest/${id}`), {
+            const response = await fetch((`${apiUrl}/quest/${id}`), {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },

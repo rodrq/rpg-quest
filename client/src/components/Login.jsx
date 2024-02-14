@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const history = useHistory();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/auth', {
+      const response = await fetch(apiUrl + 'auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
