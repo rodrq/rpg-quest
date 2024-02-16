@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const Play = () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = import.meta.env.VITE_APP_API_URL;
     const history = useHistory();
     const { authenticated } = useAuth();
     const [loading, setLoading] = useState(false);

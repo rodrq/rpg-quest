@@ -13,7 +13,7 @@ const getCookie = (name) => {
   };
   
 const Quest = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const { id } = useParams();
   const [quest, setQuest] = useState(null);
 

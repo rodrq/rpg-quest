@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 const getCookie = (name) => {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
@@ -12,7 +13,7 @@ const getCookie = (name) => {
 };
 
 const Quests = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
 
   const [quests, setQuests] = useState([]);
   const [loading, setLoading] = useState(true);
