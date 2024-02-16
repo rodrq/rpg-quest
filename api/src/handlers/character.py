@@ -1,14 +1,15 @@
 from src.models.schemas import CharacterInDb
-from sqlalchemy.orm import Session
-from src.config.database import engine
 from src.models.models import Character
 from src.utils.pw_hash import get_hashed_password
 from src.utils.query import get_character
-from fastapi import HTTPException
+from src.config.database import get_db
+from sqlalchemy.orm import Session
+from fastapi import HTTPException, Depends
 from fastapi.responses import JSONResponse
 from src.auth.auth import create_access_token
+from typing import Annotated
 
-async def create_character_handler(params: CharacterInDb):
+async def create_character_handler(params: CharacterInDb, db: Session):
     try:
         if get_character(params.username):
                 raise HTTPException(status_code=400, detail="Character username already exists")
@@ -17,9 +18,9 @@ async def create_character_handler(params: CharacterInDb):
             password=get_hashed_password(params.password),
             class_=params.class_
         )
-        with Session(engine) as session:  
-            session.add(character)
-            session.commit()
+          
+        db.add(character)
+        db.commit()
 
         token_data = {"sub": params.username}
         access_token = create_access_token(token_data)
@@ -29,7 +30,6 @@ async def create_character_handler(params: CharacterInDb):
         return response
 
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
     

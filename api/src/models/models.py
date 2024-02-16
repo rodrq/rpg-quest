@@ -16,7 +16,6 @@ class Character(Base):
     def validate_not_empty(self, key, value):
         if not value or value.isspace():
             raise ValueError(f"{key} cannot be empty")
-        print(f'{key} = {value} good')
         return value
 
     
