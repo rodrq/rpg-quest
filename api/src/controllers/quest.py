@@ -7,10 +7,9 @@ import json
 from fastapi.responses import JSONResponse
 from fastapi import HTTPException
 
-
-async def create_quest_handler(quest_params):
+async def create_quest_handler(username, class_, map):
   try:
-    system_prompt, user_prompt = create_quest_prompt(quest_params.username, quest_params.class_, quest_params.map)
+    system_prompt, user_prompt = create_quest_prompt(username, class_, map)
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-0125",
         messages=[
@@ -30,7 +29,7 @@ async def create_quest_handler(quest_params):
         description=result['description'],
         rewards=result['rewards'],
         experience=result['experience'],
-        character_username=quest_params.username,
+        character_username=username,
         cost = cost
     ) 
     print(quest)

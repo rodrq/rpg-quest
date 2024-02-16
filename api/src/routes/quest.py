@@ -9,11 +9,9 @@ router = APIRouter(prefix='/quest',
 
 @router.post("/")
 async def create_quest(current_character: Annotated[CharacterParams, Depends(get_current_character)], map:QuestGenerationMap):
-    quest_params = QuestGenerationParams(username = current_character.username, 
+    return await create_quest_handler(username = current_character.username, 
                                          class_= current_character.class_,
                                          map=map.map)
-    print(quest_params)
-    return await create_quest_handler(quest_params)
 
 
 @router.get("/all")
