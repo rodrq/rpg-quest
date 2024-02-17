@@ -16,20 +16,6 @@ const Play = () => {
       experience: '',
     });
   
-    useEffect(() => {
-      const accessToken = getCookie('token');
-    }, []);
-  
-    const getCookie = (name) => {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(`${name}=`)) {
-          return cookie.substring(name.length + 1);
-        }
-      }
-      return null;
-    };
   
     const handleChange = (e) => {
       setQuestData({ ...questData, [e.target.name]: e.target.value });
@@ -41,15 +27,14 @@ const Play = () => {
       try {
         setLoading(true);
   
-        const accessToken = getCookie('token');
   
-        const response = await fetch(apiUrl + 'quest', {
+        const response = await fetch(apiUrl + '/quest', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({ map: questData.map }),
+          credentials: 'include',
         });
         
         if (response.ok) {
@@ -86,7 +71,7 @@ const Play = () => {
                 >
                   <option value="" disabled>Select a map</option>
                   <option value="Forest">Forest</option>
-                  <option value="Huge City">Metropolis</option>
+                  <option value="City">City</option>
                   <option value="River">River</option>
                   <option value="Mountain">Mountain</option>
                   <option value="Desert">Desert</option>

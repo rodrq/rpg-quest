@@ -20,7 +20,7 @@ const authNavigation = [
     { name: 'Quests', href: '/all_quests'},
   ]
   
-
+const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function Navbar() {
   const { authenticated, logout } = useAuth();
@@ -35,17 +35,26 @@ export default function Navbar() {
 
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
 
-  const confirmLogout = () => {
-    document.cookie.split(';').forEach((cookie) => {
-      const eqPos = cookie.indexOf('=');
-      const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-    });
-    
-    logout();
-    history.replace('/')
-    setLogoutModalOpen(false);
-  };
+  const confirmLogout = async () => {
+    try {
+      const response = await fetch(apiUrl + '/auth/logout', {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        credentials: 'include', 
+      });
+
+      if (response.ok) {
+        logout();
+        setLogoutModalOpen(false);
+        history.push('/');
+      } else {
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
+  }
 
   const cancelLogout = () => {
     setLogoutModalOpen(false);

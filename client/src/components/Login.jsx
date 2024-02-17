@@ -32,7 +32,7 @@ const Login = () => {
 
       if (response.ok) {
         login(); 
-        history.push('/');
+        history.push('/play');
       } else {
         console.error('Login failed:', response.statusText);
       }

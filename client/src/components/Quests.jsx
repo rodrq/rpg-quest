@@ -21,12 +21,12 @@ const Quests = () => {
   useEffect(() => {
     const fetchQuests = async () => {
       try {
-        const accessToken = getCookie('token');
 
-        const response = await fetch(apiUrl + 'quest/all', {
+        const response = await fetch(apiUrl + '/quest/all', {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
+          credentials: 'include', 
         });
 
         if (response.ok) {

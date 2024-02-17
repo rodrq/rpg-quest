@@ -23,7 +23,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(apiUrl + 'character', {
+      const response = await fetch(apiUrl + '/character', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
