@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from src.routes import api
 from src.config.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
-from api.src.config.settings import CORS_ORIGINS
+from src.config.settings import CORS_ORIGINS
 
 def get_app() -> FastAPI:
 
