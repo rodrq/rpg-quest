@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from src.models.models import Quest
 from src.models.schemas import TokenData
-from src.config.open_ai_model import client
+from src.config.open_ai_model import openai_client
 import json
 from fastapi.responses import JSONResponse
 from fastapi import HTTPException
@@ -9,7 +9,7 @@ from fastapi import HTTPException
 async def create_quest_handler(username, class_, map, db: Session):
   try:
     system_prompt, user_prompt = create_quest_prompt(username, class_, map)
-    completion = client.chat.completions.create(
+    completion = openai_client.chat.completions.create(
         model="gpt-3.5-turbo-0125",
         messages=[
             {"role": "system", "content": system_prompt},
