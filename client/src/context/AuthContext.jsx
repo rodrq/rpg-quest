@@ -3,21 +3,40 @@ import React, { createContext, useContext, useState , useEffect} from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState(null);
 
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   
+  const [authenticated, setAuthenticated] = useState(false);
+
   const login = () => setAuthenticated(true);
+
   const logout = () => setAuthenticated(false);
+
   useEffect(() => {
-    const checkCookies = () => {
-      const cookies = document.cookie;
-      if (cookies) {
-        setAuthenticated(true);
+    const checkAuthentication = async () => {
+      try {
+        const response = await fetch((apiUrl + '/auth/is_logged'), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          credentials: 'include', 
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.message) {
+            setAuthenticated(true);
+          }
+        } else {
+          setAuthenticated(false)
+          console.error('Failed to check authentication:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error during authentication check:', error.message);
       }
     };
 
-    checkCookies();
+    checkAuthentication();
   }, []);
 
   return (
