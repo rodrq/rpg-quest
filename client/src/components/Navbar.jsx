@@ -4,7 +4,7 @@ import HomeIconSvg from '../assets/rpg-quest.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Modal from './Modal';
-
+import Loading from './Loading';
 
 const noAuthNavigation = [
   { name: 'Home', href: '/'},
@@ -24,7 +24,7 @@ const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function Navbar() {
   const { authenticated, logout } = useAuth();
-
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory()
 
   const [open, setOpen] = useState(false);
@@ -36,6 +36,7 @@ export default function Navbar() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const confirmLogout = async () => {
+    setIsLoading(true)
     try {
       const response = await fetch(apiUrl + '/auth/logout', {
         headers: {
@@ -43,7 +44,7 @@ export default function Navbar() {
         },
         credentials: 'include', 
       });
-
+      setIsLoading(false)
       if (response.ok) {
         logout();
         setLogoutModalOpen(false);
@@ -172,6 +173,7 @@ export default function Navbar() {
           onConfirm={confirmLogout}
           message="Are you sure you want to log out?"
         />
+        {isLoading && <Loading/>}
       </nav>
     );
   }

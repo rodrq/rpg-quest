@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
-
+import Loading
+ from './Loading';
 const Register = () => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -21,7 +24,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true)
     try {
       const response = await fetch(apiUrl + '/character', {
         method: 'POST',
@@ -31,7 +34,7 @@ const Register = () => {
         body: JSON.stringify(formData),
         credentials: 'include',
       });
-
+      setIsLoading(false)
       if (response.ok) {
         login();
         history.push('/play');
@@ -101,6 +104,7 @@ const Register = () => {
           Register
         </button>
       </form>
+      {isLoading && <Loading/>}
     </div>
   );
 };

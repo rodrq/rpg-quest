@@ -1,11 +1,11 @@
-// Login.js
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import   Loading   from './Loading';
 
 const Login = () => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
-  console.log(apiUrl)
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -19,19 +19,23 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
+      setIsLoading(true);
+
       const response = await fetch(apiUrl + '/auth/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams(formData).toString(),
-        credentials: 'include', 
+        credentials: 'include',
       });
 
+      setIsLoading(false);
+
       if (response.ok) {
-        login(); 
+        login();
         history.push('/play');
       } else {
         console.error('Login failed:', response.statusText);
@@ -85,6 +89,7 @@ const Login = () => {
           Don't have an account? <Link to="/register">Register here</Link>.
         </p>
       </div>
+      {isLoading && <Loading />}
     </div>
   );
 };

@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Loading from './Loading';
 
-const getCookie = (name) => {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(`${name}=`)) {
-        return cookie.substring(name.length + 1);
-      }
-    }
-    return null;
-  };
-  
 const Quest = () => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   const { id } = useParams();
@@ -42,7 +32,7 @@ const Quest = () => {
   }, [id]);
 
   if (!quest) {
-    return <div>Unauthorized</div>;
+    return <Loading />;
   }
 
   return (
@@ -62,6 +52,7 @@ const Quest = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Quest;

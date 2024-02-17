@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const getCookie = (name) => {
-  const cookies = document.cookie.split(';');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
-    if (cookie.startsWith(`${name}=`)) {
-      return cookie.substring(name.length + 1);
-    }
-  }
-  return null;
-};
+import Loading from './Loading';
 
 const Quests = () => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
 
   const [quests, setQuests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchQuests = async () => {
       try {
 
@@ -28,7 +19,7 @@ const Quests = () => {
           },
           credentials: 'include', 
         });
-
+        setIsLoading(false);
         if (response.ok) {
           const questsData = await response.json();
           setQuests(questsData);
@@ -38,15 +29,15 @@ const Quests = () => {
       } catch (error) {
         console.error('Error during quest fetch:', error.message);
       } finally {
-        setLoading(false);
+
       }
     };
 
     fetchQuests();
   }, []);
 
-  if (loading) {
-    return <p>Loading quests...</p>;
+  if (isLoading) {
+    return <Loading/>
   }
 
   return (
