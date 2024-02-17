@@ -1,4 +1,3 @@
-import os
 from starlette.config import Config
 
 #First reads env vars, then .env, then default or raises error
@@ -10,3 +9,4 @@ OPENAI_ORG_ID = config('OPENAI_ORG_ID')
 SECRET_KEY=config('SECRET_KEY')
 ALGORITHM=config('ALGORITHM')
 TOKEN_LIFETIME_MINUTES=config('TOKEN_LIFETIME_MINUTES')
+CORS_ORIGINS=config('CORS_ORIGINS')

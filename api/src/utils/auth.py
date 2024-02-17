@@ -4,11 +4,12 @@ from jose import JWTError, jwt
 from src.utils.query import get_character
 from src.utils.pw_hash import verify_password
 from datetime import datetime, timedelta
-from src.config.config import SECRET_KEY, ALGORITHM
+from api.src.config.settings import SECRET_KEY, ALGORITHM
 from typing import Annotated
 from src.models.schemas import TokenData
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
 
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth")
 
 def create_access_token(data: dict, expires_delta = timedelta(minutes=30)):
     to_encode = data.copy()

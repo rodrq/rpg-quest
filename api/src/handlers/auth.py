@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from src.utils.auth import authenticate_character, create_access_token
 from fastapi.responses import JSONResponse
 from datetime import timedelta
-from src.config.config import TOKEN_LIFETIME_MINUTES
+from src.config.settings import TOKEN_LIFETIME_MINUTES
 
 def login_for_access_token_handler(form_data: OAuth2PasswordRequestForm):
     user = authenticate_character(form_data.username, form_data.password)

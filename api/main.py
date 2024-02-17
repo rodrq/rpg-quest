@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from src.routes import api
 from src.config.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
+from api.src.config.settings import CORS_ORIGINS
+
 def get_app() -> FastAPI:
 
     app = FastAPI()
@@ -12,7 +14,7 @@ def get_app() -> FastAPI:
 
     app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[CORS_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
