@@ -3,6 +3,7 @@ from src.routes import api
 from src.config.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 from src.config.settings import CORS_ORIGINS
+from src.utils.middlewares import TokenToAuthorizationMiddleware
 
 def get_app() -> FastAPI:
 
@@ -17,8 +18,11 @@ def get_app() -> FastAPI:
     allow_origins=[CORS_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
-)
+    allow_headers=["*"])
+    
+    app.add_middleware(TokenToAuthorizationMiddleware)
+
+
     
 
     return app
