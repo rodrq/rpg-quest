@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
-import Loading
- from './Loading';
+import Loading from './Loading';
 const Register = () => {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
 
