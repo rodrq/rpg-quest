@@ -36,6 +36,7 @@ export default function Navbar() {
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const confirmLogout = async () => {
+    setOpen(false)
     setIsLoading(true)
     try {
       const response = await fetch(apiUrl + '/auth/logout', {
@@ -137,6 +138,7 @@ export default function Navbar() {
                 {authNavigation.map((item) => (
                   <div key={item.name}>
                     <Link
+                      onClick={() => setOpen(!open)}
                       to={item.href}
                       className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-xl font-bold"
                     >
@@ -157,6 +159,7 @@ export default function Navbar() {
               noAuthNavigation.map((item) => (
                 <div key={item.name}>
                   <Link
+                    onClick={() => setOpen(!open)}
                     to={item.href}
                     className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-xl font-bold"
                   >
