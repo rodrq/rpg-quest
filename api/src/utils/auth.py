@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from src.utils.query import get_character
@@ -54,3 +54,15 @@ def authenticate_character(username: str, password: str):
     if not character or not verify_password(password, character.password):
         return None
     return character
+
+
+def check_token(token: Annotated[str, Depends(oauth2_scheme)]):
+    try:
+        if jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]):
+            return {'message': 'Token is correct'}
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Token is incorrect',
+            headers={"WWW-Authenticate": "Bearer"},
+        )

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import Response, JSONResponse
 from src.handlers.auth import login_for_access_token_handler
+from src.utils.auth import check_token
 from typing import Annotated
 
 router = APIRouter(prefix="/auth",
@@ -18,6 +19,7 @@ async def logout(response: Response):
     response.delete_cookie("token")
     return response
 
-
-
+@router.get("/is_logged")
+async def check_login(token_check: Annotated[bool, Depends(check_token)]):
+    return token_check
     
