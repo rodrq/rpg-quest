@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from src.handlers.quest import create_quest_handler, get_quests_handler, get_quest_handler
 from src.models.schemas import GetQuestsParams, CharacterParams, QuestGenerationMap
 from typing import Annotated
-from src.auth.auth import get_current_character, get_current_character_id
+from src.utils.auth import get_current_character, get_current_character_id
 from src.config.database import get_db
 from sqlalchemy.orm import Session
 

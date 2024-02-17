@@ -2,12 +2,11 @@ from src.models.schemas import CharacterInDb
 from src.models.models import Character
 from src.utils.pw_hash import get_hashed_password
 from src.utils.query import get_character
-from src.config.database import get_db
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
-from src.auth.auth import create_access_token
-from typing import Annotated
+from src.utils.auth import create_access_token
+
 
 async def create_character_handler(params: CharacterInDb, db: Session):
     try:

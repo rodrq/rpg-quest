@@ -5,7 +5,7 @@ from src.handlers.character import create_character_handler
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix='/character',
-                   tags=['character'])
+                   tags=['Character creation'])
 
 
 @router.post('/')

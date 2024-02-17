@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.routes import quest, character, auth
+from src.routes import api
 from src.config.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 def get_app() -> FastAPI:
@@ -8,11 +8,7 @@ def get_app() -> FastAPI:
 
     Base.metadata.create_all(bind=engine)
     
-    app.include_router(character.router)
-
-    app.include_router(quest.router)
-    
-    app.include_router(auth.router)
+    app.include_router(api.router)
 
     app.add_middleware(
     CORSMiddleware,
