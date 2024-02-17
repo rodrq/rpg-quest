@@ -25,7 +25,7 @@ async def create_character_handler(params: CharacterInDb, db: Session):
         access_token = create_access_token(token_data)
         
         response = JSONResponse(content={"message": "Created character"})
-        response.set_cookie(key="token", value=access_token, max_age=1800)
+        response.set_cookie(key="token", value=access_token, max_age=1800, samesite='none', secure=True, httponly=True)
         return response
 
     except Exception as e:
