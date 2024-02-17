@@ -18,12 +18,13 @@ def create_access_token(data: dict, expires_delta = timedelta(minutes=30)):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def get_current_character_id(token: Annotated[str, Depends(oauth2_scheme)]):
-    credentials_exception = HTTPException(
+credentials_exception = HTTPException(
         status_code=401,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
+def get_current_character_id(token: Annotated[str, Depends(oauth2_scheme)]):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         jwt_character_username: str = payload.get("sub")
@@ -35,11 +36,6 @@ def get_current_character_id(token: Annotated[str, Depends(oauth2_scheme)]):
     return token_data
 
 def get_current_character(token: Annotated[str, Depends(oauth2_scheme)]):
-    credentials_exception = HTTPException(
-        status_code=401,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         jwt_character_username: str = payload.get("sub")
