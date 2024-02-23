@@ -2,8 +2,6 @@
 
 Proof of concept project showcasing how AI can create real-time video game quests with contextual uniqueness, avoiding the cookie-cutter phenomena.
 
-Test on https://ai-quest.onrender.com/ 
-(backend might need 20 seconds or so to turn on since it's on a free plan. Will upgrade soon)
 
 ## How it Works
 
