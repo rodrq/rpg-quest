@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
           }
         } else {
           setAuthenticated(false)
-          console.error('Failed to check authentication:', response.statusText);
+          // console.error('Failed to check authentication:', response.statusText);
         }
       } catch (error) {
         console.error('Error during authentication check:', error.message);
