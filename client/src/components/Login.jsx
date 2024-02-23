@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import   Loading   from './Loading';
 
 const Login = () => {
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const { login } = useAuth();
@@ -23,7 +22,7 @@ const Login = () => {
     try {
       setIsLoading(true);
 
-      const response = await fetch(apiUrl + '/auth/', {
+      const response = await fetch('/auth/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

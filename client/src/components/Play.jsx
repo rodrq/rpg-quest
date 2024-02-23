@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 
 const Play = () => {
-    const apiUrl = import.meta.env.VITE_APP_API_URL;
     const history = useHistory();
     const { authenticated } = useAuth();
     const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ const Play = () => {
         setLoading(true);
   
   
-        const response = await fetch(apiUrl + '/quest', {
+        const response = await fetch('/quest', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

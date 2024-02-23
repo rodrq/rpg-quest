@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import Loading from './Loading';
 
 const Quest = () => {
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
   const { id } = useParams();
   const [quest, setQuest] = useState(null);
 
@@ -11,7 +10,7 @@ const Quest = () => {
     const fetchQuest = async () => {
         try {
     
-            const response = await fetch((`${apiUrl}/quest/${id}`), {
+            const response = await fetch((`/quest/${id}`), {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
               },

@@ -4,10 +4,12 @@ from src.config.database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 from src.config.settings import CORS_ORIGINS
 from src.utils.middlewares import TokenToAuthorizationMiddleware
+from fastapi.staticfiles import StaticFiles
 
 def get_app() -> FastAPI:
 
     app = FastAPI()
+    app.mount('/', StaticFiles(directory='./dist', html=True), name='static')
 
     Base.metadata.create_all(bind=engine)
     

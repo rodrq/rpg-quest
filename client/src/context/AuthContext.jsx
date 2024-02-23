@@ -3,8 +3,6 @@ import React, { createContext, useContext, useState , useEffect} from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
   
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -15,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await fetch((apiUrl + '/auth/is_logged'), {
+        const response = await fetch(('/auth/is_logged'), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },

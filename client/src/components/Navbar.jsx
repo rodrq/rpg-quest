@@ -20,7 +20,6 @@ const authNavigation = [
     { name: 'Quests', href: '/all_quests'},
   ]
   
-const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 export default function Navbar() {
   const { authenticated, logout } = useAuth();
@@ -39,7 +38,7 @@ export default function Navbar() {
     setOpen(false)
     setIsLoading(true)
     try {
-      const response = await fetch(apiUrl + '/auth/logout', {
+      const response = await fetch('/auth/logout', {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },

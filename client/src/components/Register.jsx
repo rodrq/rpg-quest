@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 import Loading from './Loading';
 const Register = () => {
-  const apiUrl = import.meta.env.VITE_APP_API_URL;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +24,7 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true)
     try {
-      const response = await fetch(apiUrl + '/character', {
+      const response = await fetch('/character', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
